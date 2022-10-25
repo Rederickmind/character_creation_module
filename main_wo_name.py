@@ -84,22 +84,31 @@ def choice_char_class(char_name: str) -> Character:
     return char_class
 
 
-def start_training(character: Character):
-    """Тренируемся управлять персонажем"""
-    commands = {
-        'attack': character.attack,
-        'defence': character.defence,
-        'special': character.special,
-    }
+def start_training(character):
+    """
+    Принимает на вход имя и класс персонажа.
+    Возвращает сообщения о результатах цикла тренировки персонажа.
+    """
+    char_class = choice_char_class(character)
+    # Замените конструкцию условных операторов на словарь.
+    char_classes = {Warrior: 'ты Воитель — великий мастер ближнего боя.',
+                    Mage: 'ты Маг — превосходный укротитель стихий.',
+                    Healer: 'ты Лекарь — чародей, способный исцелять раны.'
+                    }
 
-    print(character)
+    if char_class in char_classes:
+        print(f'{character.name} - {char_classes[char_class]}')
 
     print('Потренируйся управлять своими навыками.')
     print('Введи одну из команд: attack — чтобы атаковать противника, '
           'defence — чтобы блокировать атаку противника или '
           'special — чтобы использовать свою суперсилу.')
     print('Если не хочешь тренироваться, введи команду skip.')
-    cmd: str = ''
+    cmd = None
+    commands = {'attack': character.attack,
+                'defence': character.defence,
+                'special': character.special
+                }
     while cmd != 'skip':
         cmd = input('Введи команду: ')
         if cmd in commands:
